@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+</head>
+<body ng-app="myapp" ng-controller="myctrl">
+    <form>
+        No1: <input type="number" ng-model="no1" required><br><br>
+        No2: <input type="number" ng-model="no1" required><br>
+
+        <select name="cars"  ng-model="culculate">
+            <option value="add">add</option>
+            <option value="sub">sub</option>
+            <option value="mul">multiple</option>
+            <option value="div">divi</option>
+          </select>
+          <br><br>
+          <input type="submit" value="Submit">
+    </form>
+    <h1>Result: {{result}}</h1>
+    <script>
+        var app = angular.module('my', []);
+        myapp.service('CalcService',function()
+        {
+            this.add=function(no1,no2)
+            {
+                return no1+no2;
+            }
+            this.sub=function(no1,no2)
+            {
+                return no1-no2;
+            }
+            this.mul=function(no1,no2)
+            {
+                return no1*no2;
+            }
+            this.div=function(no1,no2)
+            {
+                return no1/no2;
+            }
+        })
+        app.controller('myctrl',function($scope,CalcService)
+        {
+            $scope.culculate="add";
+            $scope.$watch('culculate',function()
+            {
+                if($scope.culculate=="add")
+                {
+                    $scope.result=CalcService.add($scope.no1,$scope.no2);
+                }
+                else if($scope.culculate=="sub")
+                {
+                    $scope.result=CalcService.sub($scope.no1,$scope.no2);
+                }
+                else if($scope.culculate=="mul")
+                {
+                    $scope.result=CalcService.mul($scope.no1,$scope.no2);
+                }
+                else if($scope.culculate=="div")
+                {
+                    $scope.result=CalcService.div($scope.no1,$scope.no2);
+                }
+            })
+        })
+    </script>
+    
+</body>
+</html>
